@@ -17,19 +17,17 @@ export default function FeaturedProducts() {
   return (
     <section className="py-14 sm:py-20 lg:py-24 px-5 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       <motion.div initial={{ opacity: 0, y: 25 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-60px' }} transition={{ duration: 0.7 }} className="text-center mb-10 sm:mb-14">
-        <span className="text-[10px] sm:text-[11px] text-h-gold tracking-[0.3em] uppercase font-medium">انتخاب ویژه</span>
-        <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-light text-h-charcoal mt-2">
-          محصولات <span className="text-gradient-gold italic font-semibold">پرفروش</span>
+        <span className="text-[10px] sm:text-[11px] text-hilda-rose tracking-[0.25em] uppercase font-light">انتخاب ویژه</span>
+        <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-light text-hilda-charcoal mt-2">
+          محصولات <span className="text-gradient-rose italic font-semibold">پرفروش</span>
         </h2>
-        <p className="text-h-charcoal/35 mt-2 sm:mt-3 max-w-xs mx-auto font-light text-[11px] sm:text-xs">محبوب‌ترین محصولات ما</p>
+        <p className="text-hilda-charcoal/35 mt-2 sm:mt-3 max-w-xs mx-auto font-light text-[11px] sm:text-xs">محبوب‌ترین محصولات ما</p>
       </motion.div>
-
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2.5 sm:gap-4 md:gap-5">
         {sampleProducts.map((p, i) => <ProductCard key={p.id} product={p} index={i} />)}
       </div>
-
       <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-center mt-8 sm:mt-10">
-        <a href="/products" className="inline-flex items-center gap-2 btn-luxury border border-h-border text-h-charcoal rounded-sm magnetic-btn text-[10px] sm:text-xs hover:bg-h-charcoal hover:text-white">
+        <a href="/products" className="inline-flex items-center gap-2 btn-luxury border-2 border-hilda-burgundy/20 text-hilda-burgundy rounded-full magnetic-btn text-[10px] sm:text-xs hover:bg-hilda-burgundy/5">
           مشاهده همه محصولات
         </a>
       </motion.div>
