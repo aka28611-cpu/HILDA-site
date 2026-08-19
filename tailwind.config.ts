@@ -6,7 +6,8 @@ const config: Config = {
     extend: {
       colors: {
         h: {
-          cream: '#FDF6F0',
+          cream: '#FAF5F0',
+          creamDark: '#F0EAE2',
           blush: '#E8B4B8',
           rose: '#C9787C',
           wine: '#8B2252',
@@ -14,7 +15,10 @@ const config: Config = {
           gold: '#D4A574',
           goldLight: '#E8C9A0',
           charcoal: '#1A1A1A',
-          muted: '#8A8A8A',
+          text: '#2D2D2D',
+          textLight: '#6B6B6B',
+          textMuted: '#999999',
+          border: 'rgba(0,0,0,0.08)',
           lavender: '#E6E0F0',
         },
       },

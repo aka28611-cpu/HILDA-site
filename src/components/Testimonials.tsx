@@ -11,10 +11,10 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <section className="py-24 sm:py-32 lg:py-40 px-6 sm:px-10 bg-h-charcoal text-white">
+    <section className="py-24 sm:py-32 lg:py-40 bg-h-charcoal text-white px-6 sm:px-10">
       <div className="max-w-[1400px] mx-auto">
         <div className="mb-16 sm:mb-20">
-          <span className="text-[9px] sm:text-[10px] tracking-[0.4em] uppercase text-white/30 font-light">نظرات</span>
+          <span className="text-[9px] sm:text-[10px] tracking-[0.4em] uppercase text-white/40 font-medium">نظرات</span>
           <div className="overflow-hidden mt-3">
             <motion.h2 initial={{ y: '100%' }} whileInView={{ y: 0 }} viewport={{ once: true }} transition={{ duration: 0.9, ease: [0.77, 0, 0.175, 1] }}
               className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light">
@@ -28,10 +28,10 @@ export default function Testimonials() {
             <motion.div key={i} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }} transition={{ duration: 0.7, delay: i * 0.12 }}
               className="border-t border-white/10 pt-8">
-              <p className="font-display text-lg sm:text-xl font-light leading-8 text-white/80 mb-8">"{t.text}"</p>
+              <p className="font-display text-lg sm:text-xl font-light leading-8 text-white/85 mb-8">"{t.text}"</p>
               <div>
-                <div className="text-[11px] font-medium tracking-wider">{t.name}</div>
-                <div className="text-[9px] text-white/30 mt-1 tracking-wider uppercase">{t.role}</div>
+                <div className="text-[11px] font-medium tracking-wider text-white/90">{t.name}</div>
+                <div className="text-[9px] text-white/40 mt-1 tracking-wider uppercase">{t.role}</div>
               </div>
             </motion.div>
           ))}
