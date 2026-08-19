@@ -1,5 +1,4 @@
- ⨯ Failed to start server
-Error: listen EADDRINUSE: address already in use :::3002
+ ⚠ Found a change in next.config.js. Restarting the server to apply the changes...
     at Server.setupListenHandle [as _listen2] (node:net:2009:16)
     at listenInCluster (node:net:2066:12)
     at Server.listen (node:net:2171:7)
