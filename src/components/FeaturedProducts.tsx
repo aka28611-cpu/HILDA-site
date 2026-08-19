@@ -1,36 +1,78 @@
 'use client';
 
-import React from 'react';
-import { motion } from 'framer-motion';
-import ProductCard from './ProductCard';
+import React, { useRef } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
-const sampleProducts = [
-  { id: '1', name: 'ست لانژری رز گلد', price: 890000, originalPrice: 1200000, image: 'https://images.unsplash.com/photo-1571513722275-4b419cb09b89?w=600&h=800&fit=crop&q=80', rating: 4.9, reviews: 128, isNew: true, colors: ['#E8B4B8', '#D4A574', '#1A1A1A'] },
-  { id: '2', name: 'سوتین بی‌نیاز ابریشمی', price: 450000, image: 'https://images.unsplash.com/photo-1616530940355-351fabd9524b?w=600&h=800&fit=crop&q=80', rating: 4.8, reviews: 95, colors: ['#FDF6F0', '#C9787C', '#6B1D3A'] },
-  { id: '3', name: 'نایت‌ور ساتن مشکی', price: 680000, originalPrice: 900000, image: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&h=800&fit=crop&q=80', rating: 4.7, reviews: 76, isSale: true, colors: ['#1A1A1A', '#8B2252'] },
-  { id: '4', name: 'بادی توری کلاسیک', price: 750000, image: 'https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?w=600&h=800&fit=crop&q=80', rating: 4.9, reviews: 203, isNew: true, colors: ['#C9787C', '#E8B4B8'] },
-  { id: '5', name: 'شورت فانتزی پرنسسی', price: 280000, image: 'https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?w=600&h=800&fit=crop&q=80', rating: 4.6, reviews: 142, colors: ['#E8B4B8', '#FDF6F0', '#D4A574'] },
-  { id: '6', name: 'ست میمون و کاپ‌دار', price: 560000, originalPrice: 750000, image: 'https://images.unsplash.com/photo-1578632292335-df3abbb0d586?w=600&h=800&fit=crop&q=80', rating: 4.8, reviews: 89, isSale: true, colors: ['#C4A1B4', '#8B2252'] },
+const products = [
+  { id: '1', name: 'ست لانژری رز گلد', price: '۸۹۰,۰۰۰', img: 'https://images.unsplash.com/photo-1571513722275-4b419cb09b89?w=800&h=1000&fit=crop&q=80', tag: 'جدید' },
+  { id: '2', name: 'سوتین بی‌نیاز ابریشمی', price: '۴۵۰,۰۰۰', img: 'https://images.unsplash.com/photo-1616530940355-351fabd9524b?w=800&h=1000&fit=crop&q=80', tag: '' },
+  { id: '3', name: 'نایت‌ور ساتن مشکی', price: '۶۸۰,۰۰۰', img: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=800&h=1000&fit=crop&q=80', tag: 'فروش ویژه' },
+  { id: '4', name: 'بادی توری کلاسیک', price: '۷۵۰,۰۰۰', img: 'https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?w=800&h=1000&fit=crop&q=80', tag: '' },
 ];
+
+function ProductItem({ product, index }: { product: typeof products[0]; index: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
+  const y = useTransform(scrollYProgress, [0, 1], [60, -60]);
+
+  return (
+    <motion.div ref={ref} initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-80px' }} transition={{ duration: 0.8, delay: index * 0.1 }}
+      className={`group ${index % 2 === 0 ? '' : 'mt-12 sm:mt-20'}`}>
+      <Link href={`/product/${product.id}`}>
+        <div className="product-item relative aspect-[3/4] rounded-sm overflow-hidden bg-h-blush/5">
+          <Image src={product.img} alt={product.name} fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" />
+          {product.tag && (
+            <span className="absolute top-4 left-4 text-[8px] tracking-[0.2em] uppercase bg-h-charcoal text-white px-3 py-1.5 rounded-sm z-10">
+              {product.tag}
+            </span>
+          )}
+          {/* Hover overlay */}
+          <div className="absolute inset-0 bg-h-charcoal/0 group-hover:bg-h-charcoal/10 transition-all duration-700" />
+          {/* Bottom info on hover */}
+          <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] tracking-[0.15em] uppercase text-white/80">مشاهده</span>
+              <span className="text-[10px] tracking-[0.15em] text-white/50">←</span>
+            </div>
+          </div>
+        </div>
+        <div className="mt-4 sm:mt-5 flex items-start justify-between">
+          <div>
+            <h3 className="font-display text-base sm:text-lg font-light text-h-charcoal group-hover:text-h-wine transition-colors">{product.name}</h3>
+            <p className="text-[10px] sm:text-[11px] text-h-muted mt-1 font-light">{product.price} تومان</p>
+          </div>
+        </div>
+      </Link>
+    </motion.div>
+  );
+}
 
 export default function FeaturedProducts() {
   return (
-    <section className="py-14 sm:py-20 lg:py-24 px-5 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      <motion.div initial={{ opacity: 0, y: 25 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-60px' }} transition={{ duration: 0.7 }} className="text-center mb-10 sm:mb-14">
-        <span className="text-[10px] sm:text-[11px] text-hilda-rose tracking-[0.25em] uppercase font-light">انتخاب ویژه</span>
-        <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-light text-hilda-charcoal mt-2">
-          محصولات <span className="text-gradient-rose italic font-semibold">پرفروش</span>
-        </h2>
-        <p className="text-hilda-charcoal/35 mt-2 sm:mt-3 max-w-xs mx-auto font-light text-[11px] sm:text-xs">محبوب‌ترین محصولات ما</p>
-      </motion.div>
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2.5 sm:gap-4 md:gap-5">
-        {sampleProducts.map((p, i) => <ProductCard key={p.id} product={p} index={i} />)}
+    <section className="py-24 sm:py-32 lg:py-40 px-6 sm:px-10">
+      <div className="max-w-[1400px] mx-auto">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-16 sm:mb-20">
+          <div>
+            <span className="text-[9px] sm:text-[10px] tracking-[0.4em] uppercase text-h-muted font-light">مجموعه</span>
+            <div className="overflow-hidden mt-3">
+              <motion.h2 initial={{ y: '100%' }} whileInView={{ y: 0 }} viewport={{ once: true }} transition={{ duration: 0.9, ease: [0.77, 0, 0.175, 1] }}
+                className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-h-charcoal">
+                انتخاب ویژه
+              </motion.h2>
+            </div>
+          </div>
+          <Link href="/products" className="mt-6 sm:mt-0 text-[10px] tracking-[0.2em] uppercase text-h-muted hover:text-h-charcoal transition-colors border-b border-h-charcoal/10 pb-1">
+            مشاهده همه ←
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-12 lg:gap-16">
+          {products.map((p, i) => <ProductItem key={p.id} product={p} index={i} />)}
+        </div>
       </div>
-      <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-center mt-8 sm:mt-10">
-        <a href="/products" className="inline-flex items-center gap-2 btn-luxury border-2 border-hilda-burgundy/20 text-hilda-burgundy rounded-full magnetic-btn text-[10px] sm:text-xs hover:bg-hilda-burgundy/5">
-          مشاهده همه محصولات
-        </a>
-      </motion.div>
     </section>
   );
 }

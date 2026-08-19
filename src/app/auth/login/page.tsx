@@ -40,7 +40,7 @@ export default function LoginPage() {
 
           {/* Logo */}
           <div className="mb-8">
-            <Logo variant="full" size="lg" />
+            <Logo size="lg" />
           </div>
 
           <h1 className="font-display text-3xl font-light text-hilda-charcoal mb-2">

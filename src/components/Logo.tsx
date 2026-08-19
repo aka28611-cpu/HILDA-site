@@ -1,38 +1,12 @@
 'use client';
 
-import React from 'react';
 import Link from 'next/link';
 
-interface LogoProps {
-  className?: string;
-  variant?: 'full' | 'icon' | 'text';
-  size?: 'sm' | 'md' | 'lg';
-}
-
-export default function Logo({ className = '', variant = 'full', size = 'md' }: LogoProps) {
-  const sizes = { sm: { icon: 28, text: 'text-lg' }, md: { icon: 34, text: 'text-xl' }, lg: { icon: 44, text: 'text-3xl' } };
-
+export default function Logo({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) {
+  const sizes = { sm: 'text-lg', md: 'text-xl', lg: 'text-3xl' };
   return (
-    <Link href="/" className={`flex items-center gap-1.5 ${className}`}>
-      {(variant === 'full' || variant === 'icon') && (
-        <svg width={sizes[size].icon} height={sizes[size].icon} viewBox="0 0 80 80" fill="none">
-          <defs>
-            <linearGradient id="hilda-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#8B2252" />
-              <stop offset="50%" stopColor="#C9787C" />
-              <stop offset="100%" stopColor="#D4A574" />
-            </linearGradient>
-          </defs>
-          <circle cx="40" cy="40" r="38" fill="none" stroke="url(#hilda-grad)" strokeWidth="0.8" opacity="0.35" />
-          <text x="40" y="48" textAnchor="middle" fill="url(#hilda-grad)" fontFamily="Cormorant, Georgia, serif" fontSize="36" fontWeight="600" fontStyle="italic">H</text>
-        </svg>
-      )}
-      {(variant === 'full' || variant === 'text') && (
-        <div className="flex flex-col">
-          <span className={`${sizes[size].text} font-display font-semibold tracking-[0.2em] text-hilda-burgundy leading-none`}>HILDA</span>
-          {size !== 'sm' && <span className="text-[0.55em] tracking-[0.3em] text-hilda-rose/50 font-sans font-light uppercase mt-0.5">Lingerie</span>}
-        </div>
-      )}
+    <Link href="/" className={`font-display ${sizes[size]} font-light tracking-[0.2em] text-h-charcoal`}>
+      HILDA
     </Link>
   );
 }

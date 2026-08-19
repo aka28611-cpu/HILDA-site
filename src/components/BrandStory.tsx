@@ -1,78 +1,65 @@
 'use client';
 
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
-import { Feather, Heart, Gem } from 'lucide-react';
-
-const values = [
-  { icon: Feather, title: 'طراحی ظریف', desc: 'هر محصول با دقت و ظرافت طراحی شده' },
-  { icon: Heart, title: 'راحتی بی‌نظیر', desc: 'جنس‌های باکیفیت و نرم برای تمام روز' },
-  { icon: Gem, title: 'کیفیت لوکس', desc: 'بهترین مواد اولیه برای ماندگاری' },
-];
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 export default function BrandStory() {
   const ref = useRef<HTMLDivElement>(null);
-  const textRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(textRef, { once: true, margin: '-80px' });
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
-  const y1 = useTransform(scrollYProgress, [0, 1], [60, -60]);
+  const imgY = useTransform(scrollYProgress, [0, 1], [80, -80]);
+  const textOpacity = useTransform(scrollYProgress, [0.1, 0.4], [0, 1]);
 
   return (
-    <section ref={ref} className="py-16 sm:py-24 lg:py-28 relative overflow-hidden bg-hilda-cream">
-      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 relative">
-        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-          <motion.div style={{ y: y1 }} className="relative order-2 lg:order-1">
-            <div className="relative w-full aspect-square max-w-[280px] sm:max-w-[340px] lg:max-w-[380px] mx-auto">
-              <motion.div initial={{ opacity: 0, scale: 0.85 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 1 }}
-                className="absolute inset-5 sm:inset-7 rounded-full shadow-2xl shadow-hilda-rose/20"
-                style={{ background: 'linear-gradient(135deg, #E8B4B8, #C9787C, #8B2252)' }}>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="font-display text-white/15 text-[70px] sm:text-[90px] lg:text-[110px] font-light italic">H</span>
-                </div>
-                <div className="absolute inset-3 rounded-full border border-white/10" />
-              </motion.div>
+    <section ref={ref} className="relative py-32 sm:py-40 lg:py-48 overflow-hidden">
+      <div className="max-w-[1400px] mx-auto px-6 sm:px-10">
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+          {/* Visual */}
+          <motion.div style={{ y: imgY }} className="relative order-2 lg:order-1">
+            <div className="relative aspect-[4/5] max-w-lg mx-auto">
+              <div className="absolute inset-0 bg-gradient-to-br from-h-blush/30 via-h-rose/20 to-h-wine/15 rounded-sm" />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="font-display text-[140px] sm:text-[180px] font-light text-h-charcoal/[0.04]">H</span>
+              </div>
+              {/* Floating elements */}
               <motion.div animate={{ y: [-5, 5, -5] }} transition={{ duration: 5, repeat: Infinity }}
-                className="absolute -top-1 -right-1 sm:top-0 sm:right-0 glass rounded-xl p-3 sm:p-3.5 shadow-lg z-10 cursor-default">
-                <div className="text-lg sm:text-xl mb-0.5">🌸</div>
-                <div className="text-[9px] sm:text-[10px] font-medium text-hilda-charcoal">طراحی خاص</div>
+                className="absolute -top-4 -right-4 sm:-top-6 sm:-right-6 glass rounded-lg p-4 shadow-lg z-10">
+                <div className="text-2xl mb-1">🌸</div>
+                <div className="text-[9px] font-medium text-h-charcoal">طراحی ظریف</div>
               </motion.div>
               <motion.div animate={{ y: [5, -5, 5] }} transition={{ duration: 6, repeat: Infinity }}
-                className="absolute -bottom-1 -left-1 sm:bottom-4 sm:left-0 glass rounded-xl p-3 sm:p-3.5 shadow-lg z-10 cursor-default">
-                <div className="text-lg sm:text-xl mb-0.5">💎</div>
-                <div className="text-[9px] sm:text-[10px] font-medium text-hilda-charcoal">کیفیت بالا</div>
+                className="absolute -bottom-4 -left-4 sm:-bottom-6 sm:-left-6 glass rounded-lg p-4 shadow-lg z-10">
+                <div className="text-2xl mb-1">💎</div>
+                <div className="text-[9px] font-medium text-h-charcoal">کیفیت بالا</div>
               </motion.div>
             </div>
           </motion.div>
 
-          <div ref={textRef} className="text-right order-1 lg:order-2">
-            <motion.span initial={{ opacity: 0, x: 15 }} animate={isInView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.5 }}
-              className="text-[10px] sm:text-[11px] text-hilda-rose tracking-[0.25em] uppercase font-light">داستان ما</motion.span>
-            <div className="overflow-hidden mt-2 sm:mt-3 mb-3 sm:mb-5">
-              <motion.h2 initial={{ y: '110%', opacity: 0 }} animate={isInView ? { y: 0, opacity: 1 } : {}}
-                transition={{ delay: 0.15, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                className="font-display text-2xl sm:text-3xl md:text-4xl font-light text-hilda-charcoal">
-                ساخته شده با <span className="text-gradient-rose italic font-semibold">عشق</span>
-              </motion.h2>
+          {/* Text */}
+          <motion.div style={{ opacity: textOpacity }} className="order-1 lg:order-2">
+            <span className="text-[9px] sm:text-[10px] tracking-[0.4em] uppercase text-h-muted font-light">داستان ما</span>
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-light text-h-charcoal mt-4 mb-8 leading-tight">
+              ساخته شده با<br />
+              <span className="italic text-h-rose/70">عشق و ظرافت</span>
+            </h2>
+            <div className="space-y-5">
+              <p className="text-xs sm:text-[13px] text-h-muted font-light leading-8">
+                Hilda با الهام از زیبایی طبیعی زنان متولد شد. ما باور داریم هر زنی
+                لایق احساس زیبایی و اعتماد به نفس است.
+              </p>
+              <p className="text-xs sm:text-[13px] text-h-muted font-light leading-8">
+                هر محصول با دقت طراحی و تولید می‌شود تا ترکیبی بی‌نقص از
+                راحتی، زیبایی و کیفیت را ارائه دهد.
+              </p>
             </div>
-            <motion.p initial={{ opacity: 0, y: 12 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.3, duration: 0.5 }}
-              className="text-hilda-charcoal/45 font-light leading-7 sm:leading-8 mb-6 sm:mb-8 text-xs sm:text-sm">
-              Hilda با هدف ارائه لباس زیری متولد شد که هم زیبا باشد، هم راحت، و به شما احساس اعتماد به نفس بدهد.
-            </motion.p>
-            <div className="space-y-4 sm:space-y-5">
-              {values.map((v, i) => (
-                <motion.div key={i} initial={{ opacity: 0, x: 20 }} animate={isInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ delay: 0.4 + i * 0.12, duration: 0.5 }} className="flex items-start gap-3 group cursor-default">
-                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-hilda-wine/8 flex items-center justify-center text-hilda-wine group-hover:bg-hilda-wine group-hover:text-white transition-all duration-400 flex-shrink-0">
-                    <v.icon size={18} />
-                  </div>
-                  <div>
-                    <h3 className="text-xs sm:text-sm font-medium text-hilda-charcoal">{v.title}</h3>
-                    <p className="text-[10px] sm:text-[11px] text-hilda-charcoal/40 font-light mt-0.5">{v.desc}</p>
-                  </div>
-                </motion.div>
+            <div className="mt-10 flex gap-12">
+              {[{ v: '+۱۰K', l: 'مشتری' }, { v: '+۵۰۰', l: 'محصول' }, { v: '۴.۹', l: 'امتیاز' }].map((s) => (
+                <div key={s.l}>
+                  <div className="font-display text-2xl sm:text-3xl font-light text-h-charcoal">{s.v}</div>
+                  <div className="text-[9px] text-h-muted/50 mt-1 tracking-wider uppercase">{s.l}</div>
+                </div>
               ))}
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
