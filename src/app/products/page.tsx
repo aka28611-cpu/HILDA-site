@@ -50,7 +50,7 @@ export default function ProductsPage() {
   const [activeCategory, setActiveCategory] = useState('all');
   const [sortBy, setSortBy] = useState('newest');
   const [priceRange, setPriceRange] = useState('all');
-  const [viewMode, setViewMode] = useState<'grid' | 'large'>(`grid`);
+  const [viewMode, setViewMode] = useState<'grid' | 'large'>('grid');
   const [showFilters, setShowFilters] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -63,53 +63,47 @@ export default function ProductsPage() {
     return true;
   });
 
-  // Sort
   switch (sortBy) {
-    case 'price-low':
-      filtered.sort((a, b) => a.price - b.price);
-      break;
-    case 'price-high':
-      filtered.sort((a, b) => b.price - a.price);
-      break;
-    case 'bestselling':
-      filtered.sort((a, b) => b.reviews - a.reviews);
-      break;
-    case 'rating':
-      filtered.sort((a, b) => b.rating - a.rating);
-      break;
-    default:
-      filtered.sort((a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0));
+    case 'price-low': filtered.sort((a, b) => a.price - b.price); break;
+    case 'price-high': filtered.sort((a, b) => b.price - a.price); break;
+    case 'bestselling': filtered.sort((a, b) => b.reviews - a.reviews); break;
+    case 'rating': filtered.sort((a, b) => b.rating - a.rating); break;
+    default: filtered.sort((a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0));
   }
 
   return (
-    <div className="min-h-screen bg-hilda-cream">
-      {/* Page Header */}
-      <div className="bg-gradient-to-b from-hilda-blush/10 to-hilda-cream pt-8 pb-6">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <h1 className="font-display text-4xl md:text-5xl font-light text-hilda-charcoal text-center">
-              محصولات <span className="text-gradient-rose italic">Hilda</span>
+    <div className="min-h-screen bg-h-cream">
+      {/* Hero Banner */}
+      <section className="relative pt-28 pb-12 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-h-blush/15 to-h-cream" />
+        <div className="absolute top-20 right-[10%] w-72 h-72 bg-h-blush/20 rounded-full blur-[100px]" />
+        <div className="absolute bottom-0 left-[15%] w-60 h-60 bg-h-wine/5 rounded-full blur-[80px]" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <motion.div initial={{ opacity: 0, y: 25 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="text-center">
+            <span className="text-[10px] tracking-[0.4em] uppercase text-h-textLight font-medium">مجموعه کامل</span>
+            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-light text-h-charcoal mt-3 mb-3">
+              محصولات <span className="italic text-h-wine">Hilda</span>
             </h1>
-            <p className="text-center text-hilda-charcoal/50 mt-3 font-light">
-              مجموعه‌ای از زیباترین لباس‌های زیر زنانه
+            <p className="text-h-textLight text-sm font-light max-w-md mx-auto">
+              مجموعه‌ای از زیباترین و باکیفیت‌ترین لباس‌های زیر زنانه
             </p>
           </motion.div>
         </div>
-      </div>
+      </section>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
         {/* Filter Bar */}
-        <div className="flex flex-wrap items-center justify-between gap-4 py-6 border-b border-hilda-blush/20">
+        <div className="flex flex-wrap items-center justify-between gap-4 py-5 border-b border-h-charcoal/8">
           {/* Category Tabs */}
-          <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+          <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
             {filterCategories.map((cat) => (
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`px-4 py-2 rounded-full text-sm whitespace-nowrap transition-all duration-300 ${
+                className={`px-4 py-2 rounded-full text-xs whitespace-nowrap transition-all duration-300 cursor-pointer ${
                   activeCategory === cat.id
-                    ? 'bg-hilda-burgundy text-white'
-                    : 'bg-hilda-blush/10 text-hilda-charcoal/60 hover:bg-hilda-blush/20'
+                    ? 'bg-h-wine text-white shadow-sm shadow-h-wine/15'
+                    : 'bg-h-blush/10 text-h-textLight hover:bg-h-blush/20 hover:text-h-text'
                 }`}
               >
                 {cat.name}
@@ -121,37 +115,29 @@ export default function ProductsPage() {
           <div className="flex items-center gap-3">
             <button
               onClick={() => setShowFilters(!showFilters)}
-              className="p-2 rounded-lg hover:bg-hilda-blush/10 transition-colors"
+              className={`p-2 rounded-lg transition-colors cursor-pointer ${showFilters ? 'bg-h-wine/10 text-h-wine' : 'hover:bg-h-blush/10 text-h-textLight'}`}
             >
               <SlidersHorizontal size={18} />
             </button>
-            <div className="flex bg-hilda-blush/10 rounded-lg p-1">
-              <button
-                onClick={() => setViewMode('grid')}
-                className={`p-1.5 rounded-md transition-colors ${viewMode === 'grid' ? 'bg-white shadow-sm' : ''}`}
-              >
-                <Grid3X3 size={16} />
+            <div className="flex bg-h-blush/10 rounded-lg p-1">
+              <button onClick={() => setViewMode('grid')} className={`p-1.5 rounded-md transition-colors cursor-pointer ${viewMode === 'grid' ? 'bg-white shadow-sm text-h-charcoal' : 'text-h-textMuted'}`}>
+                <Grid3X3 size={15} />
               </button>
-              <button
-                onClick={() => setViewMode('large')}
-                className={`p-1.5 rounded-md transition-colors ${viewMode === 'large' ? 'bg-white shadow-sm' : ''}`}
-              >
-                <LayoutGrid size={16} />
+              <button onClick={() => setViewMode('large')} className={`p-1.5 rounded-md transition-colors cursor-pointer ${viewMode === 'large' ? 'bg-white shadow-sm text-h-charcoal' : 'text-h-textMuted'}`}>
+                <LayoutGrid size={15} />
               </button>
             </div>
             <div className="relative">
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="appearance-none bg-hilda-blush/10 text-sm px-4 py-2 pr-8 rounded-lg cursor-pointer focus:outline-none"
+                className="appearance-none bg-h-blush/10 text-xs text-h-text px-4 py-2 pr-8 rounded-lg cursor-pointer focus:outline-none border border-transparent focus:border-h-blush/30"
               >
                 {sortOptions.map((opt) => (
-                  <option key={opt.value} value={opt.value}>
-                    {opt.label}
-                  </option>
+                  <option key={opt.value} value={opt.value}>{opt.label}</option>
                 ))}
               </select>
-              <ChevronDown size={14} className="absolute left-2 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <ChevronDown size={13} className="absolute left-2 top-1/2 -translate-y-1/2 pointer-events-none text-h-textMuted" />
             </div>
           </div>
         </div>
@@ -159,34 +145,27 @@ export default function ProductsPage() {
         {/* Filter Panel */}
         <AnimatePresence>
           {showFilters && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              className="overflow-hidden"
-            >
-              <div className="py-6 flex flex-wrap gap-6">
-                {/* Search */}
+            <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
+              <div className="py-5 flex flex-wrap gap-5 border-b border-h-charcoal/8">
                 <div className="relative flex-1 min-w-[200px]">
-                  <Search size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-hilda-charcoal/40" />
+                  <Search size={15} className="absolute right-3 top-1/2 -translate-y-1/2 text-h-textMuted" />
                   <input
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="جستجوی محصول..."
-                    className="w-full bg-hilda-blush/10 rounded-xl px-4 py-2.5 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-hilda-blush/30"
+                    className="w-full bg-h-blush/8 rounded-xl px-4 py-2.5 pr-10 text-xs text-h-text placeholder:text-h-textMuted focus:outline-none focus:ring-2 focus:ring-h-blush/30 border border-transparent focus:border-h-blush/20"
                   />
                 </div>
-                {/* Price Range */}
                 <div className="flex gap-2 flex-wrap">
                   {priceRanges.map((range) => (
                     <button
                       key={range.id}
                       onClick={() => setPriceRange(range.id)}
-                      className={`px-3 py-1.5 rounded-lg text-xs transition-all ${
+                      className={`px-3 py-1.5 rounded-lg text-[11px] transition-all cursor-pointer ${
                         priceRange === range.id
-                          ? 'bg-hilda-wine text-white'
-                          : 'bg-hilda-blush/10 text-hilda-charcoal/60 hover:bg-hilda-blush/20'
+                          ? 'bg-h-wine text-white'
+                          : 'bg-h-blush/8 text-h-textLight hover:bg-h-blush/15'
                       }`}
                     >
                       {range.name}
@@ -199,37 +178,29 @@ export default function ProductsPage() {
         </AnimatePresence>
 
         {/* Results Count */}
-        <div className="py-4 text-sm text-hilda-charcoal/50">
+        <div className="py-4 text-xs text-h-textMuted">
           {filtered.length} محصول یافت شد
         </div>
 
         {/* Products Grid */}
-        <div
-          className={`grid gap-4 md:gap-8 ${
-            viewMode === 'large'
-              ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
-              : 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
-          }`}
-        >
+        <div className={`grid gap-4 md:gap-8 ${
+          viewMode === 'large'
+            ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
+            : 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
+        }`}>
           {filtered.map((product, i) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              index={i}
-            />
+            <ProductCard key={product.id} product={product} index={i} />
           ))}
         </div>
 
         {filtered.length === 0 && (
-          <div className="text-center py-20">
-            <div className="text-6xl mb-4">🔍</div>
-            <h3 className="font-display text-2xl text-hilda-charcoal mb-2">
-              محصولی یافت نشد
-            </h3>
-            <p className="text-hilda-charcoal/50 font-light">
-              فیلترها را تغییر دهید یا جستجوی دیگری امتحان کنید
-            </p>
-          </div>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-24">
+            <div className="w-16 h-16 rounded-full bg-h-blush/10 flex items-center justify-center mx-auto mb-5">
+              <Search size={24} className="text-h-textMuted" />
+            </div>
+            <h3 className="font-display text-2xl text-h-charcoal mb-2">محصولی یافت نشد</h3>
+            <p className="text-h-textLight text-sm font-light">فیلترها را تغییر دهید یا جستجوی دیگری امتحان کنید</p>
+          </motion.div>
         )}
       </div>
     </div>

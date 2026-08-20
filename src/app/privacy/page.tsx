@@ -46,7 +46,7 @@ const sections = [
 export default function PrivacyPage() {
   return (
     <div className="min-h-screen bg-hilda-cream">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-16">
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-16">
           <Shield size={40} className="mx-auto text-hilda-wine mb-4" />
           <h1 className="font-display text-4xl md:text-5xl font-light text-hilda-charcoal">

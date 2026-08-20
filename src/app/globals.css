@@ -6,7 +6,8 @@
 
 /* ═══════════════════════════════════════════════════════════
    HILDA — Premium Luxury Lingerie
-   Color System: Cream + Rose + Wine + Gold
+   Color System: Cream + Rose + Wine
+   Inspired by: SKIMS, Bluebella, Maison Close, Noomo
    ═══════════════════════════════════════════════════════════ */
 
 :root {
@@ -63,24 +64,101 @@ body {
   box-shadow: 0 4px 24px rgba(0,0,0,0.04);
 }
 
-/* ═══ BUTTONS ═══ */
-.btn-primary {
-  @apply relative overflow-hidden px-8 py-3.5 text-xs font-medium tracking-[0.15em] uppercase cursor-pointer;
-  @apply bg-h-wine text-white transition-all duration-500;
-  @apply hover:bg-h-burgundy hover:shadow-lg hover:shadow-h-wine/15;
+.glass-dark {
+  background: rgba(107, 29, 58, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.12);
 }
 
-.btn-outline {
-  @apply relative overflow-hidden px-8 py-3.5 text-xs font-medium tracking-[0.15em] uppercase cursor-pointer;
-  @apply border border-h-charcoal/15 text-h-text transition-all duration-500;
-  @apply hover:bg-h-charcoal hover:text-white hover:border-h-charcoal;
+/* ═══ BUTTONS ═══ */
+@layer components {
+  .btn-primary {
+    @apply relative overflow-hidden px-8 py-3.5 text-xs font-medium tracking-[0.15em] uppercase cursor-pointer;
+    @apply bg-h-wine text-white transition-all duration-500;
+    @apply hover:bg-h-burgundy hover:shadow-lg hover:shadow-h-wine/15;
+  }
+
+  .btn-outline {
+    @apply relative overflow-hidden px-8 py-3.5 text-xs font-medium tracking-[0.15em] uppercase cursor-pointer;
+    @apply border border-h-charcoal/15 text-h-text transition-all duration-500;
+    @apply hover:bg-h-charcoal hover:text-white hover:border-h-charcoal;
+  }
+
+  .btn-luxury {
+    @apply relative overflow-hidden px-8 py-3.5 text-sm font-medium tracking-[0.1em] cursor-pointer;
+    @apply transition-all duration-500;
+    @apply hover:shadow-xl;
+  }
+}
+
+/* ═══ TEXT GRADIENT ═══ */
+.text-gradient-rose {
+  background: linear-gradient(135deg, #C9787C, #8B2252);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, #D4A574, #8B2252);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ═══ DIVIDER ═══ */
+.divider-elegant {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.divider-elegant::before,
+.divider-elegant::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(0,0,0,0.08), transparent);
+}
+
+/* ═══ PRODUCT CARD ═══ */
+.product-card {
+  @apply relative;
+}
+.product-card .product-image {
+  @apply transition-transform duration-[800ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)];
+}
+.product-card:hover .product-image {
+  transform: scale(1.06);
+}
+.product-card .product-overlay {
+  @apply absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 transition-opacity duration-700;
+}
+.product-card:hover .product-overlay {
+  opacity: 1;
+}
+
+/* ═══ PRODUCT HOVER (legacy) ═══ */
+.product-item { @apply relative overflow-hidden cursor-pointer; }
+.product-item img { @apply transition-transform duration-[1000ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]; }
+.product-item:hover img { transform: scale(1.05); }
+
+/* ═══ CHAT BUBBLE ═══ */
+@keyframes chatBounceIn {
+  0% { transform: scale(0.8) translateY(10px); opacity: 0; }
+  60% { transform: scale(1.02) translateY(-2px); opacity: 1; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+.chat-bubble-animate {
+  animation: chatBounceIn 0.4s ease-out;
 }
 
 /* ═══ MARQUEE ═══ */
 @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 .animate-marquee { animation: marquee 20s linear infinite; }
 
-/* ═══ NOISE ═══ */
+/* ═══ NOISE TEXTURE ═══ */
 .noise::after {
   content: '';
   @apply fixed inset-0 pointer-events-none z-50;
@@ -88,10 +166,30 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* ═══ PRODUCT HOVER ═══ */
-.product-item { @apply relative overflow-hidden cursor-pointer; }
-.product-item img { @apply transition-transform duration-[1000ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]; }
-.product-item:hover img { transform: scale(1.05); }
+/* ═══ SHIMMER EFFECT ═══ */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.shimmer {
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* ═══ LINE CLAMP ═══ */
+.line-clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
 
 /* ═══ UTILITIES ═══ */
 @layer utilities {

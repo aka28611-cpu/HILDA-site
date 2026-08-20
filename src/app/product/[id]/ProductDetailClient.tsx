@@ -28,8 +28,7 @@ const productData: Record<string, any> = {
       'https://images.unsplash.com/photo-1616530940355-351fabd9524b?w=800&h=1000&fit=crop',
       'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=800&h=1000&fit=crop',
     ],
-    description:
-      'ست لانژری رز گلد Hilda با پارچه ابریشم مصنیعی درجه یک و طراحی منحصربه‌فرد ساخته شده. این ست شامل سوتین و شورت با جزئیات ظریف تور و روبان است.',
+    description: 'ست لانژری رز گلد Hilda با پارچه ابریشم مصنیعی درجه یک و طراحی منحصربه‌فرد ساخته شده. این ست شامل سوتین و شورت با جزئیات ظریف تور و روبان است.',
     rating: 4.9,
     reviews: 128,
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
@@ -81,23 +80,27 @@ export default function ProductDetailClient({ id }: { id: string }) {
   };
 
   return (
-    <div className="min-h-screen bg-hilda-cream">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <div className="flex items-center gap-2 text-sm text-hilda-charcoal/40">
-          <Link href="/" className="hover:text-hilda-wine transition-colors">خانه</Link>
-          <ChevronLeft size={14} />
-          <Link href="/products" className="hover:text-hilda-wine transition-colors">محصولات</Link>
-          <ChevronLeft size={14} />
-          <span className="text-hilda-charcoal/70">{product.name}</span>
+    <div className="min-h-screen bg-h-cream">
+      {/* Breadcrumb */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-4">
+        <div className="flex items-center gap-2 text-xs text-h-textMuted">
+          <Link href="/" className="hover:text-h-wine transition-colors">خانه</Link>
+          <ChevronLeft size={12} />
+          <Link href="/products" className="hover:text-h-wine transition-colors">محصولات</Link>
+          <ChevronLeft size={12} />
+          <span className="text-h-text">{product.name}</span>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16">
-          <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }}>
-            <div className="relative aspect-[3/4] rounded-3xl overflow-hidden bg-hilda-blush/10 mb-4">
+          {/* Images */}
+          <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7 }}>
+            <div className="relative aspect-[3/4] rounded-2xl overflow-hidden bg-h-blush/10 mb-4">
               <Image src={product.images[activeImage]} alt={product.name} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" priority />
-              {product.isNew && <span className="absolute top-4 right-4 bg-hilda-wine text-white text-xs px-3 py-1.5 rounded-full font-medium z-10">جدید</span>}
+              {product.isNew && (
+                <span className="absolute top-4 right-4 bg-h-wine text-white text-xs px-3 py-1.5 rounded-full font-medium z-10">جدید</span>
+              )}
               {product.originalPrice && (
                 <span className="absolute top-4 left-4 bg-red-500 text-white text-xs px-3 py-1.5 rounded-full font-medium z-10">
                   %{Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)} تخفیف
@@ -107,7 +110,7 @@ export default function ProductDetailClient({ id }: { id: string }) {
             {product.images.length > 1 && (
               <div className="flex gap-3">
                 {product.images.map((img: string, i: number) => (
-                  <button key={i} onClick={() => setActiveImage(i)} className={`relative w-20 h-20 rounded-xl overflow-hidden border-2 transition-all duration-300 ${activeImage === i ? 'border-hilda-wine' : 'border-transparent'}`}>
+                  <button key={i} onClick={() => setActiveImage(i)} className={`relative w-20 h-20 rounded-xl overflow-hidden border-2 transition-all duration-300 cursor-pointer ${activeImage === i ? 'border-h-wine' : 'border-transparent opacity-60 hover:opacity-100'}`}>
                     <Image src={img} alt="" fill className="object-cover" sizes="80px" />
                   </button>
                 ))}
@@ -115,90 +118,99 @@ export default function ProductDetailClient({ id }: { id: string }) {
             )}
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }}>
-            <h1 className="font-display text-3xl md:text-4xl font-light text-hilda-charcoal mb-3">{product.name}</h1>
+          {/* Details */}
+          <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2, duration: 0.7 }}>
+            <h1 className="font-display text-3xl md:text-4xl font-light text-h-charcoal mb-3">{product.name}</h1>
             <div className="flex items-center gap-3 mb-6">
               <div className="flex">
                 {Array.from({ length: 5 }).map((_, i) => (
-                  <Star key={i} size={16} className={i < Math.floor(product.rating) ? 'fill-hilda-gold text-hilda-gold' : 'text-hilda-charcoal/20'} />
+                  <Star key={i} size={16} className={i < Math.floor(product.rating) ? 'fill-h-gold text-h-gold' : 'text-h-charcoal/15'} />
                 ))}
               </div>
-              <span className="text-sm text-hilda-charcoal/50">{product.rating} ({product.reviews} نظر)</span>
+              <span className="text-sm text-h-textLight">{product.rating} ({product.reviews} نظر)</span>
             </div>
 
             <div className="flex items-baseline gap-3 mb-6">
-              <span className="text-3xl font-semibold text-hilda-wine">{product.price.toLocaleString('fa-IR')} تومان</span>
-              {product.originalPrice && <span className="text-lg text-hilda-charcoal/30 line-through">{product.originalPrice.toLocaleString('fa-IR')}</span>}
+              <span className="text-3xl font-semibold text-h-wine">{product.price.toLocaleString('fa-IR')} تومان</span>
+              {product.originalPrice && <span className="text-lg text-h-textMuted line-through">{product.originalPrice.toLocaleString('fa-IR')}</span>}
             </div>
 
-            <p className="text-hilda-charcoal/60 font-light leading-8 mb-8">{product.description}</p>
+            <p className="text-h-textLight text-sm font-light leading-8 mb-8">{product.description}</p>
 
+            {/* Colors */}
             <div className="mb-6">
-              <h3 className="text-sm font-medium text-hilda-charcoal mb-3">رنگ: <span className="text-hilda-charcoal/50">{product.colors[selectedColor].name}</span></h3>
+              <h3 className="text-sm font-medium text-h-charcoal mb-3">رنگ: <span className="text-h-textLight font-normal">{product.colors[selectedColor].name}</span></h3>
               <div className="flex gap-3">
                 {product.colors.map((color: any, i: number) => (
-                  <button key={i} onClick={() => setSelectedColor(i)} className={`w-10 h-10 rounded-full border-2 transition-all duration-300 ${selectedColor === i ? 'border-hilda-wine scale-110 shadow-lg' : 'border-hilda-blush/30 hover:scale-105'}`} style={{ backgroundColor: color.hex }} aria-label={color.name} />
+                  <button key={i} onClick={() => setSelectedColor(i)} className={`w-10 h-10 rounded-full border-2 transition-all duration-300 cursor-pointer ${selectedColor === i ? 'border-h-wine scale-110 shadow-lg shadow-h-wine/15' : 'border-h-blush/30 hover:scale-105'}`} style={{ backgroundColor: color.hex }} aria-label={color.name} />
                 ))}
               </div>
             </div>
 
+            {/* Sizes */}
             <div className="mb-6">
-              <h3 className="text-sm font-medium text-hilda-charcoal mb-3">سایز:</h3>
+              <h3 className="text-sm font-medium text-h-charcoal mb-3">سایز:</h3>
               <div className="flex gap-2">
                 {product.sizes.map((size: string) => (
-                  <button key={size} onClick={() => setSelectedSize(size)} className={`w-12 h-12 rounded-xl text-sm font-medium transition-all duration-300 ${selectedSize === size ? 'bg-hilda-burgundy text-white shadow-lg shadow-hilda-burgundy/30' : 'bg-hilda-blush/10 text-hilda-charcoal hover:bg-hilda-blush/20'}`}>{size}</button>
+                  <button key={size} onClick={() => setSelectedSize(size)} className={`w-12 h-12 rounded-xl text-sm font-medium transition-all duration-300 cursor-pointer ${selectedSize === size ? 'bg-h-wine text-white shadow-lg shadow-h-wine/15' : 'bg-h-blush/8 text-h-text hover:bg-h-blush/15 border border-h-blush/10'}`}>{size}</button>
                 ))}
               </div>
             </div>
 
+            {/* Quantity */}
             <div className="mb-8">
-              <h3 className="text-sm font-medium text-hilda-charcoal mb-3">تعداد:</h3>
-              <div className="flex items-center bg-hilda-blush/10 rounded-xl w-fit">
-                <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="p-3 hover:bg-hilda-blush/20 rounded-r-xl transition-colors"><Minus size={16} /></button>
-                <span className="w-12 text-center font-medium">{quantity}</span>
-                <button onClick={() => setQuantity(quantity + 1)} className="p-3 hover:bg-hilda-blush/20 rounded-l-xl transition-colors"><Plus size={16} /></button>
+              <h3 className="text-sm font-medium text-h-charcoal mb-3">تعداد:</h3>
+              <div className="flex items-center bg-h-blush/8 rounded-xl w-fit border border-h-blush/10">
+                <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="p-3 hover:bg-h-blush/15 rounded-r-xl transition-colors cursor-pointer"><Minus size={16} className="text-h-text" /></button>
+                <span className="w-12 text-center font-medium text-h-charcoal">{quantity}</span>
+                <button onClick={() => setQuantity(quantity + 1)} className="p-3 hover:bg-h-blush/15 rounded-l-xl transition-colors cursor-pointer"><Plus size={16} className="text-h-text" /></button>
               </div>
             </div>
 
+            {/* Action Buttons */}
             <div className="flex gap-3 mb-8">
-              <button onClick={handleAddToCart} className={`flex-1 btn-luxury rounded-xl flex items-center justify-center gap-2 transition-all duration-300 ${addedToCart ? 'bg-green-500 text-white' : 'bg-hilda-burgundy text-white hover:shadow-xl hover:shadow-hilda-burgundy/30'}`}>
+              <button onClick={handleAddToCart} className={`flex-1 btn-luxury rounded-xl flex items-center justify-center gap-2 transition-all duration-300 cursor-pointer ${addedToCart ? 'bg-green-500 text-white' : 'bg-h-burgundy text-white hover:shadow-xl hover:shadow-h-burgundy/20'}`}>
                 <ShoppingBag size={18} />
                 {addedToCart ? '✓ اضافه شد!' : 'افزودن به سبد خرید'}
               </button>
-              <button onClick={() => setIsWishlisted(!isWishlisted)} className={`p-3.5 rounded-xl border-2 transition-all duration-300 ${isWishlisted ? 'bg-hilda-wine text-white border-hilda-wine' : 'border-hilda-blush/30 hover:border-hilda-wine hover:text-hilda-wine'}`}>
+              <button onClick={() => setIsWishlisted(!isWishlisted)} className={`p-3.5 rounded-xl border-2 transition-all duration-300 cursor-pointer ${isWishlisted ? 'bg-h-wine text-white border-h-wine' : 'border-h-blush/20 hover:border-h-wine hover:text-h-wine text-h-textLight'}`}>
                 <Heart size={20} fill={isWishlisted ? 'currentColor' : 'none'} />
               </button>
-              <button className="p-3.5 rounded-xl border-2 border-hilda-blush/30 hover:border-hilda-wine hover:text-hilda-wine transition-all duration-300"><Share2 size={20} /></button>
+              <button className="p-3.5 rounded-xl border-2 border-h-blush/20 hover:border-h-wine hover:text-h-wine transition-all duration-300 cursor-pointer text-h-textLight">
+                <Share2 size={20} />
+              </button>
             </div>
 
+            {/* Badges */}
             <div className="grid grid-cols-3 gap-4 mb-8">
               {[{ icon: Truck, label: 'ارسال رایگان' }, { icon: Shield, label: 'ضمانت اصالت' }, { icon: RefreshCw, label: 'مرجوعی ۷ روزه' }].map((badge) => (
-                <div key={badge.label} className="flex flex-col items-center text-center p-3 bg-hilda-blush/5 rounded-xl">
-                  <badge.icon size={18} className="text-hilda-wine mb-1.5" />
-                  <span className="text-xs text-hilda-charcoal/60">{badge.label}</span>
+                <div key={badge.label} className="flex flex-col items-center text-center p-3 bg-h-blush/5 rounded-xl border border-h-blush/10">
+                  <badge.icon size={18} className="text-h-wine mb-1.5" />
+                  <span className="text-[11px] text-h-textLight">{badge.label}</span>
                 </div>
               ))}
             </div>
 
-            <div className="border-t border-hilda-blush/20 pt-6">
+            {/* Reviews */}
+            <div className="border-t border-h-charcoal/8 pt-6">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="font-medium text-hilda-charcoal">نظرات ({productReviews.length})</h3>
-                <button className="text-sm text-hilda-wine hover:underline flex items-center gap-1"><MessageCircle size={14} /> نظر دادن</button>
+                <h3 className="font-medium text-h-charcoal">نظرات ({productReviews.length})</h3>
+                <button className="text-xs text-h-wine hover:underline flex items-center gap-1 cursor-pointer"><MessageCircle size={13} /> نظر دادن</button>
               </div>
               <div className="space-y-4">
                 {productReviews.map((review, i) => (
-                  <div key={i} className="bg-hilda-blush/5 rounded-2xl p-4">
+                  <div key={i} className="bg-h-blush/5 rounded-2xl p-4 border border-h-blush/10">
                     <div className="flex items-center gap-3 mb-2">
                       <span className="text-xl">{review.avatar}</span>
                       <div>
-                        <span className="text-sm font-medium">{review.name}</span>
-                        <span className="text-xs text-hilda-charcoal/40 mr-2">{review.date}</span>
+                        <span className="text-sm font-medium text-h-charcoal">{review.name}</span>
+                        <span className="text-xs text-h-textMuted mr-2">{review.date}</span>
                       </div>
                       <div className="mr-auto flex">
-                        {Array.from({ length: review.rating }).map((_, j) => (<Star key={j} size={12} className="fill-hilda-gold text-hilda-gold" />))}
+                        {Array.from({ length: review.rating }).map((_, j) => (<Star key={j} size={12} className="fill-h-gold text-h-gold" />))}
                       </div>
                     </div>
-                    <p className="text-sm text-hilda-charcoal/60 font-light leading-6">{review.text}</p>
+                    <p className="text-sm text-h-textLight font-light leading-6">{review.text}</p>
                   </div>
                 ))}
               </div>

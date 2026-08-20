@@ -22,7 +22,7 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen bg-hilda-cream">
       {/* Hero */}
-      <section className="relative py-24 overflow-hidden">
+      <section className="relative pt-32 pb-24 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-hilda-blush/10 to-hilda-cream" />
         <div className="absolute top-10 left-20 w-72 h-72 bg-hilda-blush/15 rounded-full blur-3xl" />
         <div className="absolute bottom-10 right-20 w-96 h-96 bg-hilda-wine/5 rounded-full blur-3xl" />
